@@ -1,0 +1,18 @@
+﻿@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+
+
+<div class="test">
+    @foreach (User item in Model)
+    {
+        <span class="test2">@item.Login </span>
+        <span class="test2">@item.Email  </span>
+        <span class="test2">@item.HashPass   </span>
+        <br/>
+    }
+</div>
