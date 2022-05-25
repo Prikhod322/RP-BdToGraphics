@@ -6,15 +6,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication15.Models;
-using MySql.Data.MySqlClient;
-using Dapper;
+
 
 namespace WebApplication15.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public List<User> users = new List<User>();
+
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -23,14 +22,17 @@ namespace WebApplication15.Controllers
 
         public IActionResult Dapper()
         {
-            using (MySqlConnection connection = new MySqlConnection($@"Data Source=database-1.cqrandacnrdj.eu-west-2.rds.amazonaws.com,3306;User ID=admin;Password=12345qwert;Database=DB1"))
+            using (ApplicationContext db = new ApplicationContext())
             {
-                users = connection.Query<User>("SELECT * FROM USER").ToList();
-                connection.Open();
-                connection.Close();
+                db.Categories.Add(new Category {Name = "epfke" });
+                db.Products.Add(new Product { Name = "a", Description = "b", Price = "c", CategoryID = db.Categories.ToList()[0]});
+                db.SaveChanges();
+
+                ViewBag.Category = db.Categories.ToList();
+                ViewBag.Product = db.Products.ToList();
+                return View();
             }
 
-            return View(users);
         }
 
         public IActionResult Index()

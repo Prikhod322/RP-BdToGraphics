@@ -1,18 +1,21 @@
-﻿@model IEnumerable<User>
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
 
-
-
-
 <div class="test">
-    @foreach (User item in Model)
+
+
+    @foreach (Category item in ViewBag.Category)
     {
-        <span class="test2">@item.Login </span>
-        <span class="test2">@item.Email  </span>
-        <span class="test2">@item.HashPass   </span>
-        <br/>
+        <div>@item.Name</div>
     }
+
+    @foreach (Product item in ViewBag.Product)
+    {
+        <div>@item.Name</div>
+        <div>@item.CategoryID.ID</div>
+    }
+
+
 </div>
